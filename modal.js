@@ -17,9 +17,39 @@ const content = document.querySelector(".content");
 const contentMessage = document.querySelector(".content-message");
 const btnValid = document.querySelectorAll(".btn-validate");
 
+//variable champs
+let myForm = document.getElementById("myForm");
+let myName = document.getElementById("first");
+let mySecond = document.getElementById("last");
+let myEmail = document.getElementById("email");
+let myNaissance = document.getElementById("birthdate");
+let myParticipation = document.getElementById("quantity");
+let ville1 = document.getElementById("location1");
+let ville2 = document.getElementById("location2");
+let ville3 = document.getElementById("location3");
+let ville4 = document.getElementById("location4");
+let ville5 = document.getElementById("location5");
+let ville6 = document.getElementById("location6");
+
+
+//variable erreur formulaire
+let errorFirst = document.getElementById("errorFirst");
+let errorSecond = document.getElementById("errorSecond");
+let errorEmail = document.getElementById("errorEmail");
+let errorNaissance = document.getElementById("errorNaissance");
+let errorParticipation = document.getElementById("errorParticipation");
+let errorVilles = document.getElementById("errorVilles");
+
+//RegExp
+let myRegExp = /^[a-zA-Z-\s]{2,}$/;
+let emailRegExp = /[a-zA-Z0-9-]@gmail.com$/;
+let naissanceRegExp = /[0-9]/;
+let participationRegExp = /^[0-9]{1,}$/;
+
 // launch modal event
 modalBtn.forEach((btn) => btn.addEventListener("click", launchModal));
 closes.forEach((btn) => btn.addEventListener("click", closesModal));
+btnValid.forEach((btn) => btn.addEventListener("click", btnGO));
 
 // launch modal form
 function launchModal() {
@@ -32,7 +62,6 @@ function closesModal() {
     contentMessage.style.display = "none";
 }
 //Permet de rendre le Bouton Go valide
-btnValid.forEach((btn) => btn.addEventListener("click", btnGO));
 function btnGO() {
     closesModal();
     content.style.display = "block";
@@ -44,27 +73,6 @@ function btnGO() {
     //si tout les formulaire ont était vérifier et sont valide alors ferme la formulaire d'inscription
     //affiche un message spécifiant la validation du formulaire
     //se message aura un bouton et une croix qui fermeront le message de validation
-
-//variable champs
-let myForm = document.getElementById("myForm");
-let myName = document.getElementById("first");
-let mySecond = document.getElementById("last");
-let myEmail = document.getElementById("email");
-let myNaissance = document.getElementById("birthdate");
-let myParticipation = document.getElementById("quantity");
-
-
-//variable erreur formulaire
-let errorFirst = document.getElementById("errorFirst");
-let errorSecond = document.getElementById("errorSecond");
-let errorEmail = document.getElementById("errorEmail");
-let errorNaissance = document.getElementById("errorNaissance");
-let errorParticipation = document.getElementById("errorParticipation");
-
-let myRegExp = /^[a-zA-Z-\s]{2,}$/;
-let emailRegExp = /[a-zA-Z0-9-]@gmail.com$/;
-let naissanceRegExp = /[0-9]/;
-let participationRegExp = /^[0-9]{1,}$/;
 
 
 //fonction pour vérifier la conformité du formulaire
@@ -153,13 +161,27 @@ myForm.addEventListener('submit', function(e) {
             errorParticipation.innerHTML = "Ce champ doit être remplis";
             errorParticipation.style.color = 'red';
             alert("if Participation ");
+            e.preventDefault()
         }else {
             errorParticipation.innerHTML = "Le champs est correct";
             errorParticipation.style.color = 'green';
             alert("c'est le 3eme true Participation");
+            e.preventDefault()
+            villes(e)
+            console.log('Participation validé')
+        }
+    };
+    function villes(e) {
+        if(ville1.checked || ville2.checked || ville3.checked || ville4.checked || ville5.checked || ville6.checked) {
             content.style.display = "none";
             contentMessage.style.display = "block";
             console.log('Tout est bon')
+        }else{
+            errorVilles.innerHTML = "Ce champ doit être remplis";
+            errorVilles.style.color = 'red';
+            alert("else villes ");
+            console.log('probleme else')
+            e.preventDefault()
         }
-    };
+    }
 });
