@@ -30,6 +30,7 @@ let ville3 = document.getElementById("location3");
 let ville4 = document.getElementById("location4");
 let ville5 = document.getElementById("location5");
 let ville6 = document.getElementById("location6");
+let checkbox1 = document.getElementById("checkbox1");
 
 
 //variable erreur formulaire
@@ -39,6 +40,7 @@ let errorEmail = document.getElementById("errorEmail");
 let errorNaissance = document.getElementById("errorNaissance");
 let errorParticipation = document.getElementById("errorParticipation");
 let errorVilles = document.getElementById("errorVilles");
+let errorCondition = document.getElementById("errorCondition");
 
 //RegExp
 let myRegExp = /^[a-zA-Z-\s]{2,}$/;
@@ -96,6 +98,7 @@ myForm.addEventListener('submit', function(e) {
         nomDeFamille(e)
         console.log('prenom validé')
     };
+    //vérication du nom de famille
     function nomDeFamille(e) {
         if (mySecond.value.trim() == "") {
             errorSecond.innerHTML = "Ce champ doit être remplis";
@@ -116,6 +119,7 @@ myForm.addEventListener('submit', function(e) {
             console.log('nom de famille validé')
         }
     };
+    //vérication de l'email
     function Email(e) {
         if (myEmail.value.trim() == "") {
             errorEmail.innerHTML = "Ce champ doit être remplis.";
@@ -136,6 +140,7 @@ myForm.addEventListener('submit', function(e) {
             console.log('email validé')
         }
     };
+    //vérication de la naissance
     function Naissance(e) {
         if (myNaissance.value.trim() == "") {
             errorNaissance.innerHTML = "Ce champ doit être remplis";
@@ -156,6 +161,7 @@ myForm.addEventListener('submit', function(e) {
             console.log('naissance validé')
         }
     };
+    //vérication de la participation
     function Participation(e) {
         if (myParticipation.value.trim() == "") {
             errorParticipation.innerHTML = "Ce champ doit être remplis";
@@ -171,17 +177,36 @@ myForm.addEventListener('submit', function(e) {
             console.log('Participation validé')
         }
     };
+    //vérication de la ville
     function villes(e) {
         if(ville1.checked || ville2.checked || ville3.checked || ville4.checked || ville5.checked || ville6.checked) {
+            errorVilles.innerHTML = "Le champs est correct";
+            errorVilles.style.color = 'green';
+            e.preventDefault()
+            condition(e)
+            console.log('ville est correct')
+        }else{
+            errorVilles.innerHTML = "Vous devez cochez une ville";
+            errorVilles.style.color = 'red';
+            alert("else villes ");
+            console.log('probleme else ville')
+            e.preventDefault()
+        }
+    };
+    //vérication de la condition 
+    function condition(e) {
+        if(checkbox1.checked) {
+            errorCondition.innerHTML = "Le champs est correct";
+            errorCondition.style.color = 'green';
             content.style.display = "none";
             contentMessage.style.display = "block";
             console.log('Tout est bon')
         }else{
-            errorVilles.innerHTML = "Ce champ doit être remplis";
-            errorVilles.style.color = 'red';
-            alert("else villes ");
-            console.log('probleme else')
+            errorCondition.innerHTML = "Vous devez accepter les conditions d'utilisations";
+            errorCondition.style.color = 'red';
+            alert("else condition ");
+            console.log('probleme else condition')
             e.preventDefault()
         }
-    }
+    };
 });
