@@ -69,12 +69,71 @@ function btnGO() {
     content.style.display = "block";
     contentMessage.style.display = "none";
 };
-    //chaque formulaire doit respecter les conditions qui lui sont propres
-    //si le formulaire est valide passe au suivant
-    //sinon marque un message personnaliser en dessous du formulaire concerner
-    //si tout les formulaire ont était vérifier et sont valide alors ferme la formulaire d'inscription
-    //affiche un message spécifiant la validation du formulaire
-    //se message aura un bouton et une croix qui fermeront le message de validation
+
+
+
+console.log(document.forms["reserve"])
+
+document.forms["reserve"].addEventListener("submit", function(e) {
+    var erreur;
+    var inputs = this;
+    e.preventDefault();
+
+    //Traitement cas par cas
+    if (myRegExp.test(inputs["first","last"].value) == false) {
+        erreur = "Veuillez entrer 2 caractères ou plus pour le champ du nom.";
+    }
+
+    if (emailRegExp.test(inputs["email"].value) == false ) {
+        myEmail.onvalid = "none";
+        erreur = "Adresse email incorrecte"
+    }
+
+    if (naissanceRegExp.test(inputs["birthdate"].value) == false) {
+        erreur = "Vous devez entrer une date de naissance correct";
+        console.log("oui")
+    }
+
+    //Traitement générique
+    for (var i = 0; i < inputs.length; i++) {
+        if (!inputs[i].value) {
+            erreur = "Veuillez renseigner tous les champs";
+        }
+    };
+
+    if (erreur) {
+        e.preventDefault();
+        document.getElementById("erreur").innerHTML = erreur;
+        return false;
+    } else {
+        alert("Formulaire envoyé !");
+    };
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*
 function stopRefresh(e) {
         e.preventDefault()
         form()
@@ -182,4 +241,4 @@ function form() {
             console.log('probleme else condition')
         }
     };
-};
+};*/
