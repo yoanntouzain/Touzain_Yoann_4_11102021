@@ -213,7 +213,6 @@ input:invalid:focus {
     font-size: 20px;
     height: 48px;
 }
-
 .formData[data-error]::after {
     content: attr(data-error);
     font-size: 0.4em;

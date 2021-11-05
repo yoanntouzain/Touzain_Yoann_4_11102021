@@ -18,35 +18,39 @@ const contentMessage = document.querySelector(".content-message");
 const btnValid = document.querySelectorAll(".btn-validate");
 
 //variable champs
-let myForm = document.getElementById("myForm");
-let myName = document.getElementById("first");
-let mySecond = document.getElementById("last");
-let myEmail = document.getElementById("email");
-let myNaissance = document.getElementById("birthdate");
-let myParticipation = document.getElementById("quantity");
-let ville1 = document.getElementById("location1");
-let ville2 = document.getElementById("location2");
-let ville3 = document.getElementById("location3");
-let ville4 = document.getElementById("location4");
-let ville5 = document.getElementById("location5");
-let ville6 = document.getElementById("location6");
-let checkbox1 = document.getElementById("checkbox1");
+const myForm = document.getElementById("myForm");
+/*
+const myName = document.getElementById("first");
+const mySecond = document.getElementById("last");
+const myEmail = document.getElementById("email");
+const myNaissance = document.getElementById("birthdate");
+const myParticipation = document.getElementById("quantity");
+const ville1 = document.getElementById("location1");
+const ville2 = document.getElementById("location2");
+const ville3 = document.getElementById("location3");
+const ville4 = document.getElementById("location4");
+const ville5 = document.getElementById("location5");
+const ville6 = document.getElementById("location6");
+const checkbox1 = document.getElementById("checkbox1"); 
+*/
 
 
-//variable erreur formulaire
-let errorFirst = document.getElementById("errorFirst");
-let errorSecond = document.getElementById("errorSecond");
-let errorEmail = document.getElementById("errorEmail");
-let errorNaissance = document.getElementById("errorNaissance");
-let errorParticipation = document.getElementById("errorParticipation");
-let errorVilles = document.getElementById("errorVilles");
-let errorCondition = document.getElementById("errorCondition");
+//Constante erreur formulaire
+const errorFirst = document.getElementById("errorFirst");
+const errorSecond = document.getElementById("errorSecond");
+const errorEmail = document.getElementById("errorEmail");
+const errorNaissance = document.getElementById("errorNaissance");
+const errorParticipation = document.getElementById("errorParticipation");
+const errorVilles = document.getElementById("errorVilles");
+const errorCondition = document.getElementById("errorCondition");
 
 //RegExp
-let myRegExp = /^[a-zA-Z-\s]{2,}$/;
-let emailRegExp = /[a-zA-Z0-9-]@[a-z.]/;
-let naissanceRegExp = /[0-9]/;
-let participationRegExp = /^[0-9]{1,}$/;
+/*
+const myRegExp = /^[a-zA-Z-\s]{2,}$/;
+const emailRegExp = /[a-zA-Z0-9-]@[a-z.]/;
+const naissanceRegExp = /[0-9]/;
+const participationRegExp = /^[0-9]{1,}$/;
+*/
 
 // launch modal event
 modalBtn.forEach((btn) => btn.addEventListener("click", launchModal));
@@ -69,12 +73,256 @@ function btnGO() {
     content.style.display = "block";
     contentMessage.style.display = "none";
 };
-    //chaque formulaire doit respecter les conditions qui lui sont propres
-    //si le formulaire est valide passe au suivant
-    //sinon marque un message personnaliser en dessous du formulaire concerner
-    //si tout les formulaire ont était vérifier et sont valide alors ferme la formulaire d'inscription
-    //affiche un message spécifiant la validation du formulaire
-    //se message aura un bouton et une croix qui fermeront le message de validation
+
+
+/*
+
+PSEUDO CODE FORMULAIRE
+
+1- on définis comme variable chaque champs de formulaire (exemple: champs nom = varNomForm)
+
+
+2- créer un regex pour chaque type de formulaire
+
+3- Créer un tableau de type BOOLEAN 
+    3.1- relier chaque champs de formulaire à un indexe de tableau
+
+4- la page ne doit PAS s'actualiser
+
+5- on créer un message d'erreur unique pour chaque champs de formulaire (1 seul message d'erreur par champs)
+
+6- créer une fonction générale qui au moment du submit va utiliser des sous-fonction pour la vérifications des champs
+    6.1- cette fonction remplis un tableau de type BOOLEAN avec soit TRUE ou FALSE aprés varification des sous fonctions
+    6-2- les indexes du tableau sont relier a un champ de formulmaire unique (ex: champs prenom -> index 0, champs nom -> index 1 etc...)
+
+7- créer les sous fonctions de vérification
+    7.1- La fonction vérifie l'exactitude d'un formulaire par rapport à un REGEX définis au préalable
+    7.2- la fonction doit retourner TRUE ou FALSE a la fonction qui est étape 6
+
+8- créer une fonction d'appel de message d'erreur qui affiche un message d'erreur sous les champs incorecte OU vide
+    8.1- parcourt le tableau remplis et affiche le message d'erreur sous le(s) champs incorrectes ou vide
+    8.2- SI le formulaire est entierement TRUE ALORS afficher message de confirmation
+
+9- lancer l'etape de vérification au moment du submit (au moment du clique sur "c'est partie" lancer la fonction Etape 4)
+
+
+10 -etape finale: un message d'erreur s'affiche sous chaque champs de formulaire non remplis ou invalide OU message de confirmation si tout est ok
+
+*/
+
+//Mes variables
+    const myName = document.getElementById("first");
+    const mySecond = document.getElementById("last");
+    const myEmail = document.getElementById("email");
+    const myNaissance = document.getElementById("birthdate");
+    const myParticipation = document.getElementById("quantity");
+    const ville1 = document.getElementById("location1");
+    const ville2 = document.getElementById("location2");
+    const ville3 = document.getElementById("location3");
+    const ville4 = document.getElementById("location4");
+    const ville5 = document.getElementById("location5");
+    const ville6 = document.getElementById("location6");
+    const checkbox1 = document.getElementById("checkbox1");
+
+//Mes RegExp
+    const textRegExp = /^[a-zA-Z-\s]{2,}$/;
+    const RegExpEmail = /[a-zA-Z0-9-]@[a-z.]/;
+    const RegExpNumber = /[0-9]/;
+
+//Mon tableau
+   const arrayBoolean = [];
+
+//Mes messages d'erreurs
+    const msgErrFirst = errorFirst.innerHtml = "Veuillez entrer 2 caractères ou plus pour le champ du Prénom.";
+    const msgErrSecond = errorSecond.innerHtml = "Veuillez entrer 2 caractères ou plus pour le champ du nom.";
+    const msgErrEmail = errorEmail.innerHtml = "Veuillez devez entrer une adresse mail.";
+    const msgErrNaissance = errorNaissance.innerHtml = "Vous devez entrer votre date de naissance.";
+    const msgErrParticipation = errorParticipation.innerHtml = "Veuillez entrer une valeur numérique entière.";
+    const msgErrVilles = errorVilles.innerHtml = "Vous devez choisir une option.";
+    const msgErrCondition = errorCondition.innerHtml = "Vous devez vérifier que vous acceptez les termes et conditions.";
+//fonction submit
+document.forms["reserve"].addEventListener("submit", function(e) {
+    prenom();
+    arrayBoolean[0] = prenom(myName);
+    console.log(prenom(myName));
+
+    nom();
+    arrayBoolean[1] = nom(mySecond);
+    console.log(nom(mySecond));
+
+    email();
+    arrayBoolean[2] = email(myEmail);
+    console.log(email(myEmail));
+
+    naissance();
+    arrayBoolean[3] = naissance(myNaissance);
+    console.log(naissance(myNaissance));
+
+    participation();
+    arrayBoolean[4] = participation(myParticipation);
+    console.log(participation(myParticipation));
+
+    ville();
+    arrayBoolean[5] = ville();
+    console.log(ville());
+
+    condition();
+    arrayBoolean[6] = condition(checkbox1);
+    console.log(condition(checkbox1));
+    console.log(arrayBoolean);
+
+    scrollArray(arrayBoolean);
+    e.preventDefault();
+});
+
+
+    function prenom(){
+        if(textRegExp.test(myName.value) == true){
+            return true;
+        }
+        return false;
+    }
+
+    function nom(){
+        if(textRegExp.test(mySecond.value) == true){
+            return true;
+        }
+        return false;
+    }
+
+    function email(){
+        if(RegExpEmail.test(myEmail.value) == true){
+            return true;
+        }
+        return false;
+    }
+
+    function naissance(){
+        if(RegExpNumber.test(myNaissance.value) == true){
+            return true;
+        }
+        return false;
+    }
+
+    function participation(){
+        if(RegExpNumber.test(myParticipation.value) == true){
+            return true;
+        }
+        return false;
+    }
+    
+    function ville(){
+        if(ville1.checked || ville2.checked || ville3.checked || ville4.checked || ville5.checked || ville6.checked ){
+            return true;
+        }
+        return false;
+    };
+
+    function condition() {
+        if(checkbox1.checked){
+            return true;
+        }
+        return false
+    };
+
+function scrollArray(arrayBoolean) {
+    if (arrayBoolean[0] && arrayBoolean[1] && arrayBoolean[2] && arrayBoolean[3] && arrayBoolean[4] && arrayBoolean[5] && arrayBoolean[6] == true) {
+        content.style.display = "none";
+        contentMessage.style.display = "block";
+        return alert("Le formulaire est envoyé!")
+    }else {
+        messagePrenom()
+        messageNom()
+        messageEmail() 
+        messageNaissance() 
+        messageParticipation() 
+        messageVille() 
+        messageCondition()
+    };
+};
+
+function messagePrenom() {
+        if (arrayBoolean[0] == true) {
+        }else {
+            msgErrFirst
+            errorFirst.style.background = 'red'
+            console.log("non " + arrayBoolean[0])
+        }
+};
+
+function messageNom() {
+        if (arrayBoolean[1] == true) {
+        }else {
+            msgErrSecond
+            errorSecond.style.background = 'red'
+            console.log("non " + arrayBoolean[1])
+        }
+};
+
+function messageEmail() {
+        if (arrayBoolean[2] == true) {
+        }else {
+            msgErrEmail
+            errorEmail.style.background = 'red'
+            console.log("non " + arrayBoolean[2])
+        }
+};
+
+function messageNaissance() {
+        if (arrayBoolean[3] == true) {
+        }else {
+            msgErrNaissance
+            errorNaissance.style.background = 'red'
+            console.log("non " + arrayBoolean[3])
+        }
+};
+
+function messageParticipation() {
+        if (arrayBoolean[4] == true) {
+        }else {
+            msgErrParticipation
+            errorParticipation.style.background = 'red'
+            console.log("non " + arrayBoolean[4])
+        }
+};
+
+function messageVille() {
+        if (arrayBoolean[5] == true) {
+        }else {
+            msgErrVilles
+            errorVilles.style.background = 'red'
+            console.log("non " + arrayBoolean[5])
+        }
+};
+
+function messageCondition() {
+        if (arrayBoolean[6] == true) {
+        }else {
+            msgErrCondition
+            errorCondition.style.background = 'red'
+            console.log("non " + arrayBoolean[6])
+        }
+};
+
+
+
+
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+                                                                        // Fonction qui fonctionne
+/*
 function stopRefresh(e) {
         e.preventDefault()
         form()
@@ -182,4 +430,4 @@ function form() {
             console.log('probleme else condition')
         }
     };
-};
+};*/
