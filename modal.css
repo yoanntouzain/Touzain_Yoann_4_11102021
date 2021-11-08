@@ -196,13 +196,10 @@ input {
     outline: none;
 }
 
-input:valid:focus {
-    border: 2px solid green;
-}
-
-input:invalid:focus {
-    color: red;
-    border: 2px solid red;
+#errorFirst, #errorSecond, #errorEmail, #errorNaissance, #errorParticipation, #errorVilles,#errorCondition {
+    font-size: 0.7em;
+    color: #e54858;
+    transition: 0.3s;
 }
 
 .text-control {
@@ -213,7 +210,6 @@ input:invalid:focus {
     font-size: 20px;
     height: 48px;
 }
-
 .formData[data-error]::after {
     content: attr(data-error);
     font-size: 0.4em;
