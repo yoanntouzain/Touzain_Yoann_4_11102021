@@ -70,67 +70,116 @@ function btnGO() {
 };
 
 //Mon tableau
-   const arrayBoolean = [];
+
+class bonjour {
+    constructor(myName, mySecond, myEmail, myNaissance, myParticipation, ville1, ville2, ville3, ville4, ville5, ville6, checkbox1) {
+        this.myName = myName;
+        this.mySecond = mySecond;
+        this.myEmail = myEmail;
+        this.myNaissance = myNaissance;
+        this.myParticipation = myParticipation;
+        this.ville1 = ville1;
+        this.ville2 = ville2;
+        this.ville3 = ville3;
+        this.ville4 = ville4;
+        this.ville5 = ville5;
+        this.ville6 = ville6;
+        this.checkbox1 = checkbox1;
+    }
+};
+   /*const valueInputs = {
+       myName : Boolean,
+       mySecond : Boolean,
+       myEmail : Boolean,
+       myNaissance : Boolean,
+       myParticipation : Boolean,
+       ville1: Boolean,
+       ville2: Boolean,
+       ville3: Boolean,
+       ville4: Boolean,
+       ville5: Boolean,
+       ville6: Boolean,
+       checkbox1 : Boolean,
+   };*/
 
 //fonction submit
 document.forms["reserve"].addEventListener("submit", function(e) {
     e.preventDefault();
         
     prenom();
-    arrayBoolean[0] = prenom(myName);
+    bonjour.myName = prenom(myName);
+    console.log(bonjour.myName);
 
     nom();
-    arrayBoolean[1] = nom(mySecond);
+    bonjour.mySecond = nom(mySecond);
+    console.log(bonjour.mySecond);
 
     email();
-    arrayBoolean[2] = email(myEmail);
+    bonjour.myEmail = email(myEmail);
+    console.log(bonjour.myEmail);
 
     naissance();
-    arrayBoolean[3] = naissance(myNaissance);
+    bonjour.myNaissance = naissance(myNaissance);
+    console.log(bonjour.myNaissance);
 
     participation();
-    arrayBoolean[4] = participation(myParticipation);
+    bonjour.myParticipation = participation(myParticipation);
+    console.log(bonjour.myParticipation);
 
     ville();
-    arrayBoolean[5] = ville();
+    bonjour.ville1 = ville();
+    bonjour.ville2 = ville();
+    bonjour.ville3 = ville();
+    bonjour.ville4 = ville();
+    bonjour.ville5 = ville();
+    bonjour.ville6 = ville();
+    console.log("ville 1 = " + bonjour.ville1 
+                +" ville 2 = " + bonjour.ville2 
+                +" ville 3 = " + bonjour.ville3 
+                +" ville 4 = " + bonjour.ville4 
+                +" ville 5 = " + bonjour.ville5 
+                +" ville 6 = " + bonjour.ville6 
+                );
 
     condition();
-    arrayBoolean[6] = condition(checkbox1);
+    bonjour.checkbox1 = condition(checkbox1);
+    
+    console.log(bonjour);
 
-    scrollArray(arrayBoolean);
+    scrollArray(bonjour);
 });
 
 
     function prenom(){
-        if(textRegExp.test(myName.value) == true){
+        if(textRegExp.test(myName.value) === true){
             return true;
         }
         return false;
     }
 
     function nom(){
-        if(textRegExp.test(mySecond.value) == true){
+        if(textRegExp.test(mySecond.value) === true){
             return true;
         }
         return false;
     }
 
     function email(){
-        if(RegExpEmail.test(myEmail.value) == true){
+        if(RegExpEmail.test(myEmail.value) === true){
             return true;
         }
         return false;
     }
 
     function naissance(){
-        if(RegExpNumber.test(myNaissance.value) == true){
+        if(RegExpNumber.test(myNaissance.value) === true){
             return true;
         }
         return false;
     }
 
     function participation(){
-        if(RegExpNumber.test(myParticipation.value) == true){
+        if(RegExpNumber.test(myParticipation.value) === true){
             return true;
         }
         return false;
@@ -150,8 +199,20 @@ document.forms["reserve"].addEventListener("submit", function(e) {
         return false
     };
 
-function scrollArray(arrayBoolean) {
-    if (arrayBoolean[0] && arrayBoolean[1] && arrayBoolean[2] && arrayBoolean[3] && arrayBoolean[4] && arrayBoolean[5] && arrayBoolean[6] == true) {
+function scrollArray(bonjour) {
+    if (bonjour.myName 
+        && bonjour.mySecond 
+        && bonjour.myEmail 
+        && bonjour.myNaissance 
+        && bonjour.myParticipation 
+        && (bonjour.ville1 === true 
+        || bonjour.ville2 === true 
+        || bonjour.ville3 === true 
+        || bonjour.ville4 === true 
+        || bonjour.ville5 === true 
+        || bonjour.ville6 === true)
+        && bonjour.checkbox1 === true
+        ) {
         noneMessage();
         content.style.display = "none";
         contentMessage.style.display = "block";
@@ -176,59 +237,68 @@ function noneMessage() {
     errorVilles.style.display = "none";
     errorCondition.style.display = "none";
 }
+function oui() {
+    if (bonjour.myName === true) {
+        errorFirst.style.display = "none";
+    }else {
+        errorFirst.innerHTML = "Veuillez entrer 2 caractères ou plus pour le champ du Prénom.";
+    }
+    if (bonjour.mySecond === true) {
+        errorSecond.style.display = "none";
+    }else {
+        errorSecond.innerHTML = "Veuillez entrer 2 caractères ou plus pour le champ du nom.";
+    }
+    if (bonjour.myEmail === true) {
+        errorEmail.style.display = "none";
+    }else {
+        errorEmail.innerHTML = "Veuillez devez entrer une adresse mail.";
+    }
+    if (bonjour.myNaissance === true) {
+        errorNaissance.style.display = "none";
+    }else {
+        errorNaissance.innerHTML = "Vous devez entrer votre date de naissance.";
+    }
+    if (bonjour.myParticipation === true) {
+        errorParticipation.style.display = "none";
+    }else {
+        errorParticipation.innerHTML = "Veuillez entrer une valeur numérique entière.";
+    }
+    if (bonjour.ville1 === true || bonjour.ville2 === true || bonjour.ville3 === true || bonjour.ville4 === true || bonjour.ville5 === true || bonjour.ville6 === true) {
+        errorVilles.style.display = "none";
+    }else {
+        errorVilles.innerHTML = "Vous devez choisir une option.";
+    }
+    if (bonjour.checkbox1 === true) {
+        errorCondition.style.display = "none";
+    }else {
+        errorCondition.innerHTML = "Vous devez vérifier que vous acceptez les termes et conditions.";
+    }
+}
 
 function messagePrenom() {
-        if (arrayBoolean[0] == true) {
-            errorFirst.style.display = "none";
-        }else {
-            errorFirst.innerHTML = "Veuillez entrer 2 caractères ou plus pour le champ du Prénom.";
-        }
+    oui()
 };
 
 function messageNom() {
-        if (arrayBoolean[1] == true) {
-            errorSecond.style.display = "none";
-        }else {
-            errorSecond.innerHTML = "Veuillez entrer 2 caractères ou plus pour le champ du nom.";
-        }
+    oui()
 };
 
 function messageEmail() {
-        if (arrayBoolean[2] == true) {
-            errorEmail.style.display = "none";
-        }else {
-            errorEmail.innerHTML = "Veuillez devez entrer une adresse mail.";
-        }
+    oui()
 };
 
 function messageNaissance() {
-        if (arrayBoolean[3] == true) {
-            errorNaissance.style.display = "none";
-        }else {
-            errorNaissance.innerHTML = "Vous devez entrer votre date de naissance.";
-        }
+    oui()
 };
 
 function messageParticipation() {
-        if (arrayBoolean[4] == true) {
-            errorParticipation.style.display = "none";
-        }else {
-            errorParticipation.innerHTML = "Veuillez entrer une valeur numérique entière.";
-        }
+    oui()
 };
 
 function messageVille() {
-        if (arrayBoolean[5] == true) {
-            errorVilles.style.display = "none";
-        }else {
-            errorVilles.innerHTML = "Vous devez choisir une option.";
-        }
+    oui()
 };
 
 function messageCondition() {
-        if (arrayBoolean[6] == true) {
-            errorCondition.style.display = "none";
-        }else {
-            errorCondition.innerHTML = "Vous devez vérifier que vous acceptez les termes et conditions.";
-        }
+    oui()
 };
