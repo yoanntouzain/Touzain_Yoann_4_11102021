@@ -74,7 +74,7 @@ img {
 }
 
 main {
-    font-size: 130%;
+    font-size: 36%;
     font-weight: bolder;
     color: black;
     padding-top: 0.5vw;
@@ -169,7 +169,7 @@ main {
     overflow: hidden;
     position: relative;
     color: #fff;
-    padding-top: 311px;
+    padding-top: 249px;
     display: flex;
     flex-direction: column;
     align-content: space-between;
@@ -492,6 +492,7 @@ input[data-error]::after {
 
 .hero-text {
     width: 146%;
+    font-size: 1.4rem;
     font-weight: normal;
     margin-top: 57px;
     padding: 0;
