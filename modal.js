@@ -44,7 +44,7 @@ const errorCondition = document.getElementById("errorCondition");
 
 //Mes RegExp
 const textRegExp = /^[a-zA-Z-\s]{2,}$/;
-const RegExpEmail = /[a-zA-Z0-9-]@[a-z.]/;
+const RegExpEmail = /[a-zA-Z0-9-]{3,}@[a-z]{4,}.[a-z]{2,}/;
 const RegExpNumber = /[0-9]/;
 
 // launch modal event
@@ -87,21 +87,6 @@ class bonjour {
         this.checkbox1 = checkbox1;
     }
 };
-   /*const valueInputs = {
-       myName : Boolean,
-       mySecond : Boolean,
-       myEmail : Boolean,
-       myNaissance : Boolean,
-       myParticipation : Boolean,
-       ville1: Boolean,
-       ville2: Boolean,
-       ville3: Boolean,
-       ville4: Boolean,
-       ville5: Boolean,
-       ville6: Boolean,
-       checkbox1 : Boolean,
-   };*/
-
 //fonction submit
 document.forms["reserve"].addEventListener("submit", function(e) {
     e.preventDefault();
@@ -143,8 +128,8 @@ document.forms["reserve"].addEventListener("submit", function(e) {
 
     condition();
     bonjour.checkbox1 = condition(checkbox1);
+    console.log(bonjour.checkbox1);
     
-    console.log(bonjour);
 
     scrollArray(bonjour);
 });
@@ -152,50 +137,64 @@ document.forms["reserve"].addEventListener("submit", function(e) {
 
     function prenom(){
         if(textRegExp.test(myName.value) === true){
+            errorFirst.style.display = "none";
             return true;
         }
+        errorFirst.style.display = "block";
         return false;
     }
 
     function nom(){
         if(textRegExp.test(mySecond.value) === true){
+            errorSecond.style.display = "none";
             return true;
         }
+        errorSecond.style.display = "block";
         return false;
     }
 
     function email(){
         if(RegExpEmail.test(myEmail.value) === true){
+            errorEmail.style.display = "none";
             return true;
         }
+        errorEmail.style.display = "block";
         return false;
     }
 
     function naissance(){
         if(RegExpNumber.test(myNaissance.value) === true){
+            errorNaissance.style.display = "none";
             return true;
         }
+        errorNaissance.style.display = "block";
         return false;
     }
 
     function participation(){
         if(RegExpNumber.test(myParticipation.value) === true){
+            errorParticipation.style.display = "none";
             return true;
         }
+        errorParticipation.style.display = "block";
         return false;
     }
     
     function ville(){
         if(ville1.checked || ville2.checked || ville3.checked || ville4.checked || ville5.checked || ville6.checked ){
+            errorVilles.style.display = "none";
             return true;
         }
+        errorVilles.style.display = "block";
         return false;
     };
 
     function condition() {
         if(checkbox1.checked){
+            errorCondition.style.display = "none";
             return true;
         }
+        errorCondition.style.display = "block";
         return false
     };
 
@@ -205,74 +204,30 @@ function scrollArray(bonjour) {
         && bonjour.myEmail 
         && bonjour.myNaissance 
         && bonjour.myParticipation 
-        && (bonjour.ville1 === true 
-        || bonjour.ville2 === true 
-        || bonjour.ville3 === true 
-        || bonjour.ville4 === true 
-        || bonjour.ville5 === true 
-        || bonjour.ville6 === true)
+        && (bonjour.ville1 === true || bonjour.ville2 === true || bonjour.ville3 === true || bonjour.ville4 === true || bonjour.ville5 === true || bonjour.ville6 === true)
         && bonjour.checkbox1 === true
         ) {
-        noneMessage();
-        content.style.display = "none";
-        contentMessage.style.display = "block";
-        return alert("Le formulaire est envoyé!")
-    }else {
-        messagePrenom()
-        messageNom()
-        messageEmail() 
-        messageNaissance() 
-        messageParticipation() 
-        messageVille() 
-        messageCondition()
+            content.style.display = "none";
+            contentMessage.style.display = "block";
+    }else { 
+        messagePrenom();
+        messageNom();
+        messageEmail(); 
+        messageNaissance(); 
+        messageParticipation(); 
+        messageVille(); 
+        messageCondition();
     };
 };
 
-function noneMessage() {
-    errorFirst.style.display = "none";
-    errorSecond.style.display = "none";
-    errorEmail.style.display = "none";
-    errorNaissance.style.display = "none";
-    errorParticipation.style.display = "none";
-    errorVilles.style.display = "none";
-    errorCondition.style.display = "none";
-}
 function oui() {
-    if (bonjour.myName === true) {
-        errorFirst.style.display = "none";
-    }else {
-        errorFirst.innerHTML = "Veuillez entrer 2 caractères ou plus pour le champ du Prénom.";
-    }
-    if (bonjour.mySecond === true) {
-        errorSecond.style.display = "none";
-    }else {
-        errorSecond.innerHTML = "Veuillez entrer 2 caractères ou plus pour le champ du nom.";
-    }
-    if (bonjour.myEmail === true) {
-        errorEmail.style.display = "none";
-    }else {
-        errorEmail.innerHTML = "Veuillez devez entrer une adresse mail.";
-    }
-    if (bonjour.myNaissance === true) {
-        errorNaissance.style.display = "none";
-    }else {
-        errorNaissance.innerHTML = "Vous devez entrer votre date de naissance.";
-    }
-    if (bonjour.myParticipation === true) {
-        errorParticipation.style.display = "none";
-    }else {
-        errorParticipation.innerHTML = "Veuillez entrer une valeur numérique entière.";
-    }
-    if (bonjour.ville1 === true || bonjour.ville2 === true || bonjour.ville3 === true || bonjour.ville4 === true || bonjour.ville5 === true || bonjour.ville6 === true) {
-        errorVilles.style.display = "none";
-    }else {
-        errorVilles.innerHTML = "Vous devez choisir une option.";
-    }
-    if (bonjour.checkbox1 === true) {
-        errorCondition.style.display = "none";
-    }else {
-        errorCondition.innerHTML = "Vous devez vérifier que vous acceptez les termes et conditions.";
-    }
+    if (bonjour.myName === false) {errorFirst.innerHTML = "Veuillez entrer 2 caractères ou plus pour le champ du Prénom.";}
+    if (bonjour.mySecond === false) {errorSecond.innerHTML = "Veuillez entrer 2 caractères ou plus pour le champ du nom.";}
+    if (bonjour.myEmail === false) {errorEmail.innerHTML = "Veuillez devez entrer une adresse mail.";}
+    if (bonjour.myNaissance === false) {errorNaissance.innerHTML = "Vous devez entrer votre date de naissance.";}
+    if (bonjour.myParticipation === false) {errorParticipation.innerHTML = "Veuillez entrer une valeur numérique entière.";}
+    if (bonjour.ville1 === false || bonjour.ville2 === false || bonjour.ville3 === false || bonjour.ville4 === false || bonjour.ville5 === false || bonjour.ville6 === false) {errorVilles.innerHTML = "Vous devez choisir une option.";}
+    if (bonjour.checkbox1 === false) {errorCondition.innerHTML = "Vous devez vérifier que vous acceptez les termes et conditions.";}
 }
 
 function messagePrenom() {
