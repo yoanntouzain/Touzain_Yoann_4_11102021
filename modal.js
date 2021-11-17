@@ -10,7 +10,7 @@ function editNav() {
 // DOM Elements
 const modalbg = document.querySelector(".bground");
 const modalBtn = document.querySelectorAll(".modal-btn");
-const formData = document.querySelectorAll(".formData");
+const textControl = document.querySelectorAll(".text-control");
 const closes = document.querySelectorAll(".close");
 const btnSubmit = document.querySelector(".btn-submit");
 const content = document.querySelector(".content");
@@ -167,70 +167,56 @@ document.forms["reserve"].addEventListener("submit", function(e) {
     console.log(FORMULAIRE.checkbox1);
     
     main()
-    scrollArray(FORMULAIRE);
+    scrollArray()
 });
 
-
+//prénom et nom on la même regexp
 function prenom(){
     if(textRegExp.test(myName.value) === true){
-        errorFirst.style.display = "none";
         return true;
     }
-    errorFirst.style.display = "block";
     return false;
 }
 
 function nom(){
     if(textRegExp.test(mySecond.value) === true){
-        errorSecond.style.display = "none";
         return true;
     }
-    errorSecond.style.display = "block";
     return false;
 }
 
 function email(){
     if(RegExpEmail.test(myEmail.value) === true){
-        errorEmail.style.display = "none";
         return true;
     }
-    errorEmail.style.display = "block";
     return false;
 }
 
 function naissance(){
     if(RegExpNumber.test(myNaissance.value) === true){
-        errorNaissance.style.display = "none";
         return true;
     }
-    errorNaissance.style.display = "block";
     return false;
 }
 
 function participation(){
     if(RegExpNumber.test(myParticipation.value) === true){
-        errorParticipation.style.display = "none";
         return true;
     }
-    errorParticipation.style.display = "block";
     return false;
 }
 
 function ville(){
     if(ville1.checked || ville2.checked || ville3.checked || ville4.checked || ville5.checked || ville6.checked ){
-        errorVilles.style.display = "none";
         return true;
     }
-    errorVilles.style.display = "block";
     return false;
 };
 
 function condition() {
     if(checkbox1.checked){
-        errorCondition.style.display = "none";
         return true;
     }
-    errorCondition.style.display = "block";
     return false
 };
 
@@ -240,7 +226,7 @@ function main() {
     })
 }
 
-function scrollArray(FORMULAIRE) {
+function scrollArray() {
     if (FORMULAIRE.myName 
         && FORMULAIRE.mySecond 
         && FORMULAIRE.myEmail 
@@ -253,8 +239,11 @@ function scrollArray(FORMULAIRE) {
         contentMessage.style.display = "block";
     }
 };
+
 function oui(condition, emplacements, message) {
     if (!condition === true) {
         emplacements.innerHTML  = message;
+    }else if (condition === true) {
+        emplacements.style.display = "none"
     }
 }
