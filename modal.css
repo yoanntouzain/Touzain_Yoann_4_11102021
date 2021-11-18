@@ -74,7 +74,7 @@ img {
 }
 
 main {
-    font-size: 130%;
+    font-size: 36%;
     font-weight: bolder;
     color: black;
     padding-top: 0.5vw;
@@ -141,7 +141,7 @@ main {
 }
 
 .content {
-    margin: 5% auto;
+    margin: 1.8% auto;
     width: 100%;
     max-width: 500px;
     animation-name: modalopen;
@@ -159,7 +159,7 @@ main {
 }
 
 .message {
-    margin: 5% auto;
+    margin: 4.5% auto;
     width: 100%;
     max-width: 500px;
     animation-name: modalmsg;
@@ -169,7 +169,7 @@ main {
     overflow: hidden;
     position: relative;
     color: #fff;
-    padding-top: 311px;
+    padding-top: 249px;
     display: flex;
     flex-direction: column;
     align-content: space-between;
@@ -178,8 +178,8 @@ main {
 }
 
 .modal-body {
-    padding: 15px 8%;
-    margin: 15px auto;
+    padding: 18px 8%;
+    margin: 30px auto;
 }
 
 label {
@@ -187,7 +187,7 @@ label {
     font-size: 17px;
     font-weight: normal;
     display: inline-block;
-    margin-bottom: 11px;
+    margin-bottom: 8px;
 }
 
 input {
@@ -197,7 +197,7 @@ input {
 }
 
 #errorFirst, #errorSecond, #errorEmail, #errorNaissance, #errorParticipation, #errorVilles,#errorCondition {
-    font-size: 0.7em;
+    font-size: 1.8em;
     color: #e54858;
     transition: 0.3s;
 }
@@ -207,37 +207,9 @@ input {
     padding: 8px;
     width: 100%;
     border-radius: 8px;
-    font-size: 20px;
-    height: 48px;
+    font-size: 14px;
+    height: 36px;
 }
-.formData[data-error]::after {
-    content: attr(data-error);
-    font-size: 0.4em;
-    color: #e54858;
-    display: block;
-    margin-top: 7px;
-    margin-bottom: 7px;
-    text-align: right;
-    line-height: 0.3;
-    opacity: 0;
-    transition: 0.3s;
-}
-
-.formData[data-error-visible="true"]::after {
-    opacity: 1;
-}
-
-.formData[data-error-visible="true"] .text-control {
-    border: 2px solid #e54858;
-}
-
-
-/* 
-input[data-error]::after {
-    content: attr(data-error);
-    font-size: 0.4em;
-    color: red;
-} */
 
 .checkbox-label,
 .checkbox2-label {
@@ -250,8 +222,8 @@ input[data-error]::after {
 .checkbox-label .checkbox-icon,
 .checkbox2-label .checkbox-icon {
     display: block;
-    width: 20px;
-    height: 20px;
+    width: 17px;
+    height: 17px;
     border: 2px solid #279e7a;
     border-radius: 50%;
     text-indent: 29px;
@@ -313,10 +285,10 @@ input[data-error]::after {
 
 .close {
     position: absolute;
-    right: 15px;
+    right: 13px;
     top: 15px;
-    width: 32px;
-    height: 32px;
+    width: 30px;
+    height: 29px;
     opacity: 1;
     cursor: pointer;
     transform: scale(0.7);
@@ -325,7 +297,7 @@ input[data-error]::after {
 .close:before,
 .close:after {
     position: absolute;
-    left: 15px;
+    left: 13px;
     content: " ";
     height: 33px;
     width: 3px;
@@ -492,6 +464,7 @@ input[data-error]::after {
 
 .hero-text {
     width: 146%;
+    font-size: 1.4rem;
     font-weight: normal;
     margin-top: 57px;
     padding: 0;
@@ -535,7 +508,7 @@ footer {
     margin: 0 0.7%;
 }
 
-@media screen and (max-width: 800px) {
+@media screen and (max-width: 1024px) {
     .hero-section {
         display: block;
         box-shadow: unset;
@@ -676,6 +649,26 @@ footer {
         margin-top: 12px;
         text-align: center;
         font-size: 0.8rem;
+    }
+}
+
+@media screen and (max-width: 414px) {
+    label {
+        font-family: var(--font-default);
+        font-size: 16px;
+        font-weight: normal;
+        display: inline-block;
+        margin-bottom: 8px;
+    }
+    .text-label {
+        font-weight: normal;
+        font-size: 14px;
+    }
+    .checkbox-label, .checkbox2-label {
+        position: relative;
+        margin-left: 36px;
+        font-size: 10px;
+        font-weight: normal;
     }
 }
 

@@ -10,7 +10,7 @@ function editNav() {
 // DOM Elements
 const modalbg = document.querySelector(".bground");
 const modalBtn = document.querySelectorAll(".modal-btn");
-const formData = document.querySelectorAll(".formData");
+const textControl = document.querySelectorAll(".text-control");
 const closes = document.querySelectorAll(".close");
 const btnSubmit = document.querySelector(".btn-submit");
 const content = document.querySelector(".content");
@@ -44,7 +44,7 @@ const errorCondition = document.getElementById("errorCondition");
 
 //Mes RegExp
 const textRegExp = /^[a-zA-Z-\s]{2,}$/;
-const RegExpEmail = /[a-zA-Z0-9-]@[a-z.]/;
+const RegExpEmail = /[a-zA-Z0-9-]{3,}@[a-z]{4,}.[a-z]{2,}/;
 const RegExpNumber = /[0-9]/;
 
 // launch modal event
@@ -69,166 +69,181 @@ function btnGO() {
     contentMessage.style.display = "none";
 };
 
-//Mon tableau
-   const arrayBoolean = [];
+//Mon formulaire
+
+const FORMULAIRE = {
+    myName: undefined,
+    mySecond: undefined,
+    myEmail: undefined,
+    myNaissance: undefined,
+    myParticipation: undefined,
+    ville1: undefined,
+    ville2: undefined,
+    ville3: undefined,
+    ville4: undefined,
+    ville5: undefined,
+    ville6: undefined,
+    checkbox1: undefined,
+}
+
+//Mes emplacements d'erreurs
+
+const FORMULAIREeRROR = {
+    myName: errorFirst,
+    mySecond: errorSecond,
+    myEmail: errorEmail,
+    myNaissance: errorNaissance,
+    myParticipation: errorParticipation,
+    ville1: errorVilles,
+    ville2: errorVilles,
+    ville3: errorVilles,
+    ville4: errorVilles,
+    ville5: errorVilles,
+    ville6: errorVilles,
+    checkbox1: errorCondition,
+}
+
+//Mes messages d'erreurs
+
+const FORMULAIREmSG = {
+    myName: "Veuillez entrer 2 caractères ou plus pour le champ du Prénom.",
+    mySecond: "Veuillez entrer 2 caractères ou plus pour le champ du Nom.",
+    myEmail: "Veuillez devez entrer une adresse mail.",
+    myNaissance: "Vous devez entrer votre date de naissance.",
+    myParticipation: "Veuillez entrer une valeur numérique entière.",
+    ville1: "Vous devez choisir une option.",
+    ville2: "Vous devez choisir une option.",
+    ville3: "Vous devez choisir une option.",
+    ville4: "Vous devez choisir une option.",
+    ville5: "Vous devez choisir une option.",
+    ville6: "Vous devez choisir une option.",
+    checkbox1: "Vous devez vérifier que vous acceptez les termes et conditions.",
+}
+
+
+
 
 //fonction submit
 document.forms["reserve"].addEventListener("submit", function(e) {
     e.preventDefault();
         
-    prenom();
-    arrayBoolean[0] = prenom(myName);
+   prenom();
+    FORMULAIRE.myName = prenom(myName);
+    console.log(FORMULAIRE.myName);
 
     nom();
-    arrayBoolean[1] = nom(mySecond);
+    FORMULAIRE.mySecond = nom(mySecond);
+    console.log(FORMULAIRE.mySecond);
 
     email();
-    arrayBoolean[2] = email(myEmail);
+    FORMULAIRE.myEmail = email(myEmail);
+    console.log(FORMULAIRE.myEmail);
 
     naissance();
-    arrayBoolean[3] = naissance(myNaissance);
+    FORMULAIRE.myNaissance = naissance(myNaissance);
+    console.log(FORMULAIRE.myNaissance);
 
     participation();
-    arrayBoolean[4] = participation(myParticipation);
+    FORMULAIRE.myParticipation = participation(myParticipation);
+    console.log(FORMULAIRE.myParticipation);
 
     ville();
-    arrayBoolean[5] = ville();
+    FORMULAIRE.ville1 = ville();
+    FORMULAIRE.ville2 = ville();
+    FORMULAIRE.ville3 = ville();
+    FORMULAIRE.ville4 = ville();
+    FORMULAIRE.ville5 = ville();
+    FORMULAIRE.ville6 = ville();
+    console.log( "ville 1 = " + FORMULAIRE.ville1 
+                +" ville 2 = " + FORMULAIRE.ville2 
+                +" ville 3 = " + FORMULAIRE.ville3 
+                +" ville 4 = " + FORMULAIRE.ville4 
+                +" ville 5 = " + FORMULAIRE.ville5 
+                +" ville 6 = " + FORMULAIRE.ville6 
+                );
 
     condition();
-    arrayBoolean[6] = condition(checkbox1);
-
-    scrollArray(arrayBoolean);
+    FORMULAIRE.checkbox1 = condition(checkbox1);
+    console.log(FORMULAIRE.checkbox1);
+    
+    main()
+    scrollArray()
 });
 
-
-    function prenom(){
-        if(textRegExp.test(myName.value) == true){
-            return true;
-        }
-        return false;
+//prénom et nom on la même regexp
+function prenom(){
+    if(textRegExp.test(myName.value) === true){
+        return true;
     }
-
-    function nom(){
-        if(textRegExp.test(mySecond.value) == true){
-            return true;
-        }
-        return false;
-    }
-
-    function email(){
-        if(RegExpEmail.test(myEmail.value) == true){
-            return true;
-        }
-        return false;
-    }
-
-    function naissance(){
-        if(RegExpNumber.test(myNaissance.value) == true){
-            return true;
-        }
-        return false;
-    }
-
-    function participation(){
-        if(RegExpNumber.test(myParticipation.value) == true){
-            return true;
-        }
-        return false;
-    }
-    
-    function ville(){
-        if(ville1.checked || ville2.checked || ville3.checked || ville4.checked || ville5.checked || ville6.checked ){
-            return true;
-        }
-        return false;
-    };
-
-    function condition() {
-        if(checkbox1.checked){
-            return true;
-        }
-        return false
-    };
-
-function scrollArray(arrayBoolean) {
-    if (arrayBoolean[0] && arrayBoolean[1] && arrayBoolean[2] && arrayBoolean[3] && arrayBoolean[4] && arrayBoolean[5] && arrayBoolean[6] == true) {
-        noneMessage();
-        content.style.display = "none";
-        contentMessage.style.display = "block";
-        return alert("Le formulaire est envoyé!")
-    }else {
-        messagePrenom()
-        messageNom()
-        messageEmail() 
-        messageNaissance() 
-        messageParticipation() 
-        messageVille() 
-        messageCondition()
-    };
-};
-
-function noneMessage() {
-    errorFirst.style.display = "none";
-    errorSecond.style.display = "none";
-    errorEmail.style.display = "none";
-    errorNaissance.style.display = "none";
-    errorParticipation.style.display = "none";
-    errorVilles.style.display = "none";
-    errorCondition.style.display = "none";
+    return false;
 }
 
-function messagePrenom() {
-        if (arrayBoolean[0] == true) {
-            errorFirst.style.display = "none";
-        }else {
-            errorFirst.innerHTML = "Veuillez entrer 2 caractères ou plus pour le champ du Prénom.";
-        }
+function nom(){
+    if(textRegExp.test(mySecond.value) === true){
+        return true;
+    }
+    return false;
+}
+
+function email(){
+    if(RegExpEmail.test(myEmail.value) === true){
+        return true;
+    }
+    return false;
+}
+
+function naissance(){
+    if(RegExpNumber.test(myNaissance.value) === true){
+        return true;
+    }
+    return false;
+}
+
+function participation(){
+    if(RegExpNumber.test(myParticipation.value) === true){
+        return true;
+    }
+    return false;
+}
+
+function ville(){
+    if(ville1.checked || ville2.checked || ville3.checked || ville4.checked || ville5.checked || ville6.checked ){
+        return true;
+    }
+    return false;
 };
 
-function messageNom() {
-        if (arrayBoolean[1] == true) {
-            errorSecond.style.display = "none";
-        }else {
-            errorSecond.innerHTML = "Veuillez entrer 2 caractères ou plus pour le champ du nom.";
-        }
+function condition() {
+    if(checkbox1.checked){
+        return true;
+    }
+    return false
 };
 
-function messageEmail() {
-        if (arrayBoolean[2] == true) {
-            errorEmail.style.display = "none";
-        }else {
-            errorEmail.innerHTML = "Veuillez devez entrer une adresse mail.";
-        }
+function main() {
+    Object.keys(FORMULAIRE).forEach(function(key) {
+        oui(FORMULAIRE[key],FORMULAIREeRROR[key], FORMULAIREmSG[key])
+    })
+}
+
+function scrollArray() {
+    if (FORMULAIRE.myName 
+        && FORMULAIRE.mySecond 
+        && FORMULAIRE.myEmail 
+        && FORMULAIRE.myNaissance 
+        && FORMULAIRE.myParticipation 
+        && (FORMULAIRE.ville1 === true || FORMULAIRE.ville2 === true || FORMULAIRE.ville3 === true || FORMULAIRE.ville4 === true || FORMULAIRE.ville5 === true || FORMULAIRE.ville6 === true)
+        && FORMULAIRE.checkbox1 === true
+        ) {
+        content.style.display = "none";
+        contentMessage.style.display = "block";
+    }
 };
 
-function messageNaissance() {
-        if (arrayBoolean[3] == true) {
-            errorNaissance.style.display = "none";
-        }else {
-            errorNaissance.innerHTML = "Vous devez entrer votre date de naissance.";
-        }
-};
-
-function messageParticipation() {
-        if (arrayBoolean[4] == true) {
-            errorParticipation.style.display = "none";
-        }else {
-            errorParticipation.innerHTML = "Veuillez entrer une valeur numérique entière.";
-        }
-};
-
-function messageVille() {
-        if (arrayBoolean[5] == true) {
-            errorVilles.style.display = "none";
-        }else {
-            errorVilles.innerHTML = "Vous devez choisir une option.";
-        }
-};
-
-function messageCondition() {
-        if (arrayBoolean[6] == true) {
-            errorCondition.style.display = "none";
-        }else {
-            errorCondition.innerHTML = "Vous devez vérifier que vous acceptez les termes et conditions.";
-        }
-};
+function oui(condition, emplacements, message) {
+    if (!condition === true) {
+        emplacements.innerHTML  = message;
+    }else if (condition === true) {
+        emplacements.style.display = "none"
+    }
+}
