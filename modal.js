@@ -69,7 +69,7 @@ function btnGO() {
     contentMessage.style.display = "none";
 };
 
-//Mon formulaire
+//Mon objet contenant tous mes champs de mon formulaire
 
 const FORMULAIRE = {
     myName: undefined,
@@ -86,7 +86,7 @@ const FORMULAIRE = {
     checkbox1: undefined,
 }
 
-//Mes emplacements d'erreurs
+//Mon objet contenant mes emplacements d'erreurs
 
 const FORMULAIREeRROR = {
     myName: errorFirst,
@@ -103,7 +103,7 @@ const FORMULAIREeRROR = {
     checkbox1: errorCondition,
 }
 
-//Mes messages d'erreurs
+//Mon objet contenant mes messages d'erreurs
 
 const FORMULAIREmSG = {
     myName: "Veuillez entrer 2 caractères ou plus pour le champ du Prénom.",
@@ -123,29 +123,24 @@ const FORMULAIREmSG = {
 
 
 
-//fonction submit
+//Ma fonction qui s'éxécute lors de la soumission du formulaire
 document.forms["reserve"].addEventListener("submit", function(e) {
-    e.preventDefault();
+    e.preventDefault();//ce qui empêche le rechargement de la page
         
    prenom();
     FORMULAIRE.myName = prenom(myName);
-    console.log(FORMULAIRE.myName);
 
     nom();
     FORMULAIRE.mySecond = nom(mySecond);
-    console.log(FORMULAIRE.mySecond);
 
     email();
     FORMULAIRE.myEmail = email(myEmail);
-    console.log(FORMULAIRE.myEmail);
 
     naissance();
     FORMULAIRE.myNaissance = naissance(myNaissance);
-    console.log(FORMULAIRE.myNaissance);
 
     participation();
     FORMULAIRE.myParticipation = participation(myParticipation);
-    console.log(FORMULAIRE.myParticipation);
 
     ville();
     FORMULAIRE.ville1 = ville();
@@ -154,23 +149,15 @@ document.forms["reserve"].addEventListener("submit", function(e) {
     FORMULAIRE.ville4 = ville();
     FORMULAIRE.ville5 = ville();
     FORMULAIRE.ville6 = ville();
-    console.log( "ville 1 = " + FORMULAIRE.ville1 
-                +" ville 2 = " + FORMULAIRE.ville2 
-                +" ville 3 = " + FORMULAIRE.ville3 
-                +" ville 4 = " + FORMULAIRE.ville4 
-                +" ville 5 = " + FORMULAIRE.ville5 
-                +" ville 6 = " + FORMULAIRE.ville6 
-                );
 
     condition();
     FORMULAIRE.checkbox1 = condition(checkbox1);
-    console.log(FORMULAIRE.checkbox1);
     
     main()
     scrollArray()
 });
 
-//prénom et nom on la même regexp
+//Ma fonction vérifie la valeur dans le champ et la compare à ma RegExp, si la valeur correspond, ma fonction retournera true, sinon elle retourne false
 function prenom(){
     if(textRegExp.test(myName.value) === true){
         return true;
@@ -178,6 +165,7 @@ function prenom(){
     return false;
 }
 
+//Ma fonction vérifie la valeur dans le champ et la compare à ma RegExp, si la valeur correspond, ma fonction retournera true, sinon elle retourne false
 function nom(){
     if(textRegExp.test(mySecond.value) === true){
         return true;
@@ -185,6 +173,7 @@ function nom(){
     return false;
 }
 
+//Ma fonction vérifie la valeur dans le champ et la compare à ma RegExp, si la valeur correspond, ma fonction retournera true, sinon elle retourne false
 function email(){
     if(RegExpEmail.test(myEmail.value) === true){
         return true;
@@ -192,6 +181,7 @@ function email(){
     return false;
 }
 
+//Ma fonction vérifie la valeur dans le champ et la compare à ma RegExp, si la valeur correspond, ma fonction retournera true, sinon elle retourne false
 function naissance(){
     if(RegExpNumber.test(myNaissance.value) === true){
         return true;
@@ -199,6 +189,7 @@ function naissance(){
     return false;
 }
 
+//Ma fonction vérifie la valeur dans le champ et la compare à ma RegExp, si la valeur correspond, ma fonction retournera true, sinon elle retourne false
 function participation(){
     if(RegExpNumber.test(myParticipation.value) === true){
         return true;
@@ -206,6 +197,7 @@ function participation(){
     return false;
 }
 
+//Ma fonction vérifie la valeur dans le champ et la compare à ma RegExp, si la valeur correspond, ma fonction retournera true, sinon elle retourne false
 function ville(){
     if(ville1.checked || ville2.checked || ville3.checked || ville4.checked || ville5.checked || ville6.checked ){
         return true;
@@ -213,6 +205,7 @@ function ville(){
     return false;
 };
 
+//Ma fonction vérifie la valeur dans le champ et la compare à ma RegExp, si la valeur correspond, ma fonction retournera true, sinon elle retourne false
 function condition() {
     if(checkbox1.checked){
         return true;
@@ -220,12 +213,14 @@ function condition() {
     return false
 };
 
+//Ma fonction va ressortir toute les clés qui sont dans mon objet FORMULAIRE. Elle execute la fonction oui avec comme parametre key
 function main() {
     Object.keys(FORMULAIRE).forEach(function(key) {
         oui(FORMULAIRE[key],FORMULAIREeRROR[key], FORMULAIREmSG[key])
     })
 }
 
+//Ma fonction regarde chaque champs, si ils sont tous true alors il feras disparaître le formulaire et feras appraître le message de confirmation d'envoi
 function scrollArray() {
     if (FORMULAIRE.myName 
         && FORMULAIRE.mySecond 
@@ -240,6 +235,8 @@ function scrollArray() {
     }
 };
 
+//Ma fonction utilisant 3 parametres, condition, emplacement, message qui eux mêmes correspondent aux parametre de ma fonction main(FORMULAIRE[key],FORMULAIREeRROR[key], FORMULAIREmSG[key])
+//Cette fonction permet de vérifier chaque champs, si ça valeur est different de true, alors il insera du html. Si la la valeur est true, le message d'erreur disparaîtra
 function oui(condition, emplacements, message) {
     if (!condition === true) {
         emplacements.innerHTML  = message;
