@@ -153,8 +153,8 @@ document.forms["reserve"].addEventListener("submit", function(e) {
     condition();
     FORMULAIRE.checkbox1 = condition(checkbox1);
     
-    main()
-    scrollArray()
+    checkAllValue()
+    scrollForm()
 });
 
 //Ma fonction vérifie la valeur dans le champ et la compare à ma RegExp, si la valeur correspond, ma fonction retournera true, sinon elle retourne false
@@ -214,14 +214,14 @@ function condition() {
 };
 
 //Ma fonction va ressortir toute les clés qui sont dans mon objet FORMULAIRE. Elle execute la fonction oui avec comme parametre key
-function main() {
+function checkAllValue() {
     Object.keys(FORMULAIRE).forEach(function(key) {
-        oui(FORMULAIRE[key],FORMULAIREeRROR[key], FORMULAIREmSG[key])
+        messageError(FORMULAIRE[key],FORMULAIREeRROR[key], FORMULAIREmSG[key])
     })
 }
 
 //Ma fonction regarde chaque champs, si ils sont tous true alors il feras disparaître le formulaire et feras appraître le message de confirmation d'envoi
-function scrollArray() {
+function scrollForm() {
     if (FORMULAIRE.myName 
         && FORMULAIRE.mySecond 
         && FORMULAIRE.myEmail 
@@ -237,9 +237,10 @@ function scrollArray() {
 
 //Ma fonction utilisant 3 parametres, condition, emplacement, message qui eux mêmes correspondent aux parametre de ma fonction main(FORMULAIRE[key],FORMULAIREeRROR[key], FORMULAIREmSG[key])
 //Cette fonction permet de vérifier chaque champs, si ça valeur est different de true, alors il insera du html. Si la la valeur est true, le message d'erreur disparaîtra
-function oui(condition, emplacements, message) {
+function messageError(condition, emplacements, message) {
     if (!condition === true) {
         emplacements.innerHTML  = message;
+        emplacements.style.display = "block"
     }else if (condition === true) {
         emplacements.style.display = "none"
     }
